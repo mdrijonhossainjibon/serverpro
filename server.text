@@ -1,0 +1,68 @@
+{
+  "code": 200,
+  "status": "success",
+  "message": "Server is up and running.",
+  "description": "The server is currently operational and handling requests normally.",
+  "details": {
+    "uptime": "24 days, 4 hours, 12 minutes",
+    "lastRestart": "2024-07-15T08:00:00Z"
+  }
+}
+
+
+
+{
+  "code": 200,
+  "status": "success",
+  "message": "Ping successful.",
+  "description": "The connectivity test was successful, and the server is reachable.",
+  "details": {
+    "pingTimeMs": 12,
+    "serverAddress": "192.168.1.1",
+    "timestamp": "2024-08-09T12:34:56Z"
+  }
+}
+
+
+
+{
+  "code": 200,
+  "status": "success",
+  "message": "Service health check passed.",
+  "description": "The service is running smoothly with no issues detected.",
+  "details": {
+    "uptime": "24 days, 4 hours, 12 minutes",
+    "responseTimeMs": 45,
+    "databaseStatus": "operational",
+    "lastChecked": "2024-08-09T12:34:56Z"
+  }
+}
+
+
+
+
+{
+  "code": 200,
+  "status": "success",
+  "message": "Server time retrieved successfully.",
+  "description": "The current server time has been provided.",
+  "details": {
+    "serverTime": "2024-08-09T12:34:56Z",
+    "timezone": "UTC"
+  }
+}
+
+
+
+
+{
+  "code": 404,
+  "status": "error",
+  "message": "Resource not found.",
+  "description": "The requested resource could not be found. Please check the URL or resource identifier and try again.",
+  "details": {
+    "resource": "/api/resource/123",
+    "errorType": "NotFoundException",
+    "timestamp": "2024-08-09T12:34:56Z"
+  }
+}

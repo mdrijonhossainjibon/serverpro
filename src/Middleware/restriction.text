@@ -1,0 +1,65 @@
+ {
+  "code": -10010,
+  "status": "error",
+  "message": "Access from your IP address is blocked.",
+  "description": "Your IP address has been blocked from accessing this service. This may be due to security reasons or policy restrictions. Please check if you can access the service from a different network or contact support for further assistance.",
+  "details": {
+    "ipAddress": "192.168.1.1",
+    "reason": "IP address flagged due to suspicious activity."
+  }
+}
+
+
+{
+  "code": -10009,
+  "status": "error",
+  "message": "Access from your continent is blocked.",
+  "description": "This service is not available in your continent due to geographical restrictions or legal reasons. Please check if you can access the service from a different location or contact support for more information.",
+  "details": {
+    "continent": "Africa",
+    "reason": "Service limitations based on regional regulations."
+  }
+}
+
+
+{
+  "code": -10011,
+  "status": "error",
+  "message": "Access from your IP subnet is blocked.",
+  "description": "Requests from the IP subnet associated with your address have been blocked. This may be due to policy restrictions or detected security issues. Please check if you can access the service from a different subnet or contact support for further assistance.",
+  "details": {
+    "subnet": "192.168.0.0/24",
+    "reason": "Subnet flagged due to unusual activity."
+  }
+}
+
+
+
+ 
+
+
+ 
+{
+  "code": -10012,
+  "status": "error",
+  "message": "The service is currently undergoing maintenance.",
+  "description": "We are performing scheduled maintenance and the service is temporarily unavailable. We apologize for the inconvenience and are working to complete the maintenance as quickly as possible.",
+  "details": {
+    "scheduledStart": "2024-08-09T00:00:00Z",
+    "scheduledEnd": "2024-08-09T02:00:00Z"
+    "reason": "Routine updates and improvements."
+  }
+}
+
+
+{
+  "code": -10013,
+  "status": "error",
+  "message": "Access denied. Your IP or user is not whitelisted.",
+  "description": "Your IP address or user account is not on the whitelist for this service. To gain access, please request whitelisting from your administrator or contact support.",
+  "details": {
+    "ipAddress": "192.168.1.1",
+    "userId": "user123",
+    "whitelistStatus": "Not on whitelist"
+  }
+}
