@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 
 
 
-mongoose.connect('mongodb://localhost:27017/demo', {}).then(() => console.log("[mongoDB]: DB Connection Successful")).catch(err => console.error("[mongoDB]: MongoDB connection error", err));
+mongoose.connect('mongodb+srv://admin:admin@atlascluster.nei8u.mongodb.net/demo', {}).then(() => console.log("[mongoDB]: DB Connection Successful")).catch(err => console.error("[mongoDB]: MongoDB connection error", err));
 // Apply the rate limiting middleware to all requests
 app.use(limiter);
 // Middleware to handle errors
