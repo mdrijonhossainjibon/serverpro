@@ -6,6 +6,7 @@ export interface IPermission extends Document {
     verb: UserPermissionVerb;
     url : string;
     role : UserRole;
+    create_at : Date;
   }
 
 

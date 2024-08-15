@@ -1,6 +1,7 @@
 import { UserPermissionAction, UserPermissionVerb } from 'constanst/permissions';
 import   { Schema } from 'mongoose';
 import { UserRole } from './types';
+ 
 
 
 export const PermissionSchema: Schema = new Schema({
@@ -16,7 +17,8 @@ export const PermissionSchema: Schema = new Schema({
       required: true
     },
     url : String,
-    role : { type : String ,   enum: Object.values(UserRole) }
+    role : { type : String ,   enum: Object.values(UserRole) },
+    create_at : Date,
   });
   
 
