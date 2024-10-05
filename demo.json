@@ -1,0 +1,72 @@
+[
+    {
+      "id": 1,
+      "receiving_member": {
+        "uid": "user_123",
+        "name": "John Doe",
+        "email": "johndoe@example.com"
+      },
+      "reason": "Bonus",
+      "amount": 100,
+      "currency": {
+        "code": "USD",
+        "symbol": "$"
+      },
+      "category": "deposit",
+      "creator": {
+        "uid": "admin_001",
+        "name": "Admin User"
+      },
+      "state": "completed",
+      "receiving_account_code": "ACC123456",
+      "created_at": "2024-09-01T12:00:00Z",
+      "updated_at": "2024-09-01T12:00:00Z"
+    },
+    {
+      "id": 2,
+      "receiving_member": {
+        "uid": "user_456",
+        "name": "Jane Smith",
+        "email": "janesmith@example.com"
+      },
+      "reason": "Refund",
+      "amount": 50,
+      "currency": {
+        "code": "EUR",
+        "symbol": "€"
+      },
+      "category": "refund",
+      "creator": {
+        "uid": "admin_002",
+        "name": "Admin User 2"
+      },
+      "state": "pending",
+      "receiving_account_code": "ACC654321",
+      "created_at": "2024-09-02T14:30:00Z",
+      "updated_at": "2024-09-02T14:30:00Z"
+    },
+    {
+      "id": 3,
+      "receiving_member": {
+        "uid": "user_789",
+        "name": "Alice Johnson",
+        "email": "alicejohnson@example.com"
+      },
+      "reason": "Adjustment",
+      "amount": 200,
+      "currency": {
+        "code": "GBP",
+        "symbol": "£"
+      },
+      "category": "adjustment",
+      "creator": {
+        "uid": "admin_003",
+        "name": "Admin User 3"
+      },
+      "state": "completed",
+      "receiving_account_code": "ACC112233",
+      "created_at": "2024-09-03T09:15:00Z",
+      "updated_at": "2024-09-03T09:15:00Z"
+    }
+  ]
+  

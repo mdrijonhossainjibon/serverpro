@@ -1,3 +1,4 @@
+import { API_CALL, TypeApiPromise } from 'api_Call';
 import axios from 'axios';
 import { Request, Response, NextFunction } from 'express';
  
@@ -71,67 +72,22 @@ export const restrictionMiddleware = (scope: RestrictionScope, category: Restric
   };
 };
 
-
-const getCountryCodeFromIp = async (ip: string): Promise<string | null> => {
-  try {
-     const response = await axios.get(`http://ip-api.com/json/?fields=status,message,countryCode`);
-    
-     return response.data.countryCode; // Adjust based on the actual response
-  } catch (error) {
-     
-    return null;
-  }
-};
+ 
 
 
 
-
-const checkRestriction1 = async (  scope: RestrictionScope,
-  category: RestrictionCategory,
-  value: string,
-  ip: string
-): Promise<boolean> => {
-  if (scope === RestrictionScope.Country && category === RestrictionCategory.Blacklist) {
-    const countryCode = await getCountryCodeFromIp(ip);
-    if (countryCode && restrictionData[scope]?.[category]?.includes(countryCode)) {
-      return false; // Restricted
-    }
-  }
-  return true; // Not restricted
-};
-
-
-
-
-export const restrictionMiddleware1 = (   scope: RestrictionScope,  category: RestrictionCategory ) => {
-
+//const checkRestriction1 = async (  scope: RestrictionScope, category: RestrictionCategory,  value: string ) : Promise<{ isAllowed  : boolean ;  code : string | null }>  => {
   
+   
+    //const { response , status} : TypeApiPromise= await API_CALL(  { baseURL : 'http://ip-api.com/json'});
+
     
+       
+//};
 
-  return async (req: Request, res: Response, next: NextFunction) => {
 
-    const response = await axios.get('https://api.ipify.org/?format=json');
 
-    const clientIp =  response.data.ip;
-    const isAllowed = await checkRestriction1(scope, category, 'value', clientIp as string);
-
-    if (isAllowed) {
-      next();
-    } else {
-      res.status(451).json({
-        "code": -10008,
-        "status": "error",
-        "message": "Access from your country is blocked.",
-        "description": "This service is not available in your country due to geographical restrictions or legal reasons. Please check if you can access the service from a different location or contact support for more information.",
-        "details": {
-          "countryCode": "CN",
-          "reason": "Service restrictions based on local regulations."
-        }
-      }
-      );
-    }
-  };
-};
+ 
 
 
 

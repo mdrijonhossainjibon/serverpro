@@ -1,8 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
 // Fixed typo 'constanst'
 import { NOSQL } from 'Database'; // Ensure NOSQL is correctly configured
 import { IPermission } from 'Database/types';
 import { UserPermissionAction, UserPermissionVerb } from 'constanst/permissions';
+import { sendJSONResponse } from 'responseHandler';
 
 const patternToRegex = (pattern: string) => {
   const regexPattern = pattern
@@ -11,6 +13,21 @@ const patternToRegex = (pattern: string) => {
   return new RegExp(`^${regexPattern}$`);
 };
 
+
+const patternToReget = (pattern: string): RegExp => {
+  // Escape special tregex characters and replace dynamic segments (e.g., :id) with regex patterns
+  const escapedPattern = pattern.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+  
+  // Replace dynamic segments (e.g., :id, :name) with regex pattern [^/]+
+  let regexPattern = escapedPattern.replace(/\\:([a-zA-Z0-9_]+)/g, '[^/]+');
+  
+  // Handle optional query parameters like ?token=value
+  if (regexPattern.includes('?')) {
+    regexPattern = regexPattern.replace(/\\\?([a-zA-Z0-9_]+)=([^&]+)/g, '(\\?$1=$2)?');
+  }
+  
+  return new RegExp(`^${regexPattern}$`);
+}
 // Check if the user has the required permissions
 const checkPermissions = (permissions: IPermission[], url: string, method: string, params?: {}) => {
 
@@ -21,57 +38,52 @@ const checkPermissions = (permissions: IPermission[], url: string, method: strin
     const pattern = patternToRegex(user.url);
     const match = url.match(pattern);
 
+     if(url.match(patternToRegex('/api/v2/admin/devops/:id'))?.[0]){
+      return user.verb  === method && user.action === UserPermissionAction.Drop
+     }
 
-    if (user.url === url) { return user.url.includes(url) && ( user.verb === method ) && (user.action !== UserPermissionAction.Drop) };
-
-    if (match) {
-      return user.verb === method && (user.action !== UserPermissionAction.Drop)
-    }
+   
 
   })
-
+ 
 };
 
-function getHeader(req : Request ) {
-   console.log(req.headers)
+
+///if (match) {
+ // return user.verb === method && (user.action !== UserPermissionAction.Drop)
+///}
+
+declare global {
+  namespace Express {
+      interface Request {
+          user?:  any;
+      }
+  }
 }
 
 
+export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
+  const authHeader = req.headers['authorization'];
+  
+  if (!authHeader) {
+      return next()
+  }
+ 
+
+  jwt.verify(authHeader, process.env.JWT_SECRET || 'default-secret', (err, user) => {
+      if (err) {
+          return res.status(403).json({ error: 'Invalid or expired token' });
+      }
+
+      req.user = user; // Attach the user object to the request
+      next();
+  });
+};
 
 
 // Middleware to check permissions
 export const permissionMiddleware = async (req: Request, res: Response, next: NextFunction) => {
- 
-    
-  try {
-    const url = req.originalUrl;
-    const match = url.match(/public|private/);
-   
-
-    const users = await NOSQL.Permission.find({ role: match ? match[0] :  'admin' }).exec();
-
-    if (users.length === 0) {
-      return res.status(401).json({ message: 'Unauthorized: No user information available' });
-    }
-   
- 
-
-   
-    const method = req.method as UserPermissionVerb; // Ensure this matches the enum type
-    const params = req.params;
-
-    if (checkPermissions(users, url, method, params)) {
-      return next();
-    } else {
-      return res.status(403).json({
-        code: -10007,
-        status: 'error',
-        message: 'Access to the requested URL is blocked or permission is denied. Please check your permissions or contact support for assistance.',
-        description: 'The URL you are trying to access may be restricted based on your account permissions or geographical location. Ensure you have the correct permissions or contact support for help.'
-      });
-    }
-  } catch (error) {
-    console.error('Error in permission middleware:', error);
-    return res.status(500).json({ message: 'Internal server error' });
-  }
+  next()
 };
+
+ 

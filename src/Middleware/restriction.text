@@ -63,3 +63,60 @@
     "whitelistStatus": "Not on whitelist"
   }
 }
+
+
+
+
+
+
+
+
+
+
+// Middleware to check permissions
+export const permissionMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const url = req.originalUrl;
+    const roleMatch = url.match(/public|private/);
+    const userRole = req?.user?.role;
+
+    // Determine the role: either from the URL or the user's role
+    const role = roleMatch ? roleMatch[0] : (userRole) || 'public';
+    let query: any = { role };
+
+    // Modify query if the role is matched from the URL
+    if (roleMatch) { 
+      query = {
+        $or: [
+          { role: roleMatch[0] }, // Matches 'public' or 'private'
+          { role: userRole } // Adjust logic if necessary
+        ]
+      };
+    } 
+    const permissions = await NOSQL.Permission.find(query).exec();
+ 
+
+
+    if (permissions.length === 0) {
+      return sendJSONResponse({
+        res,
+        statusCode: 401,
+        message: { error: 'No available routes for your role.' }
+      }); 
+    }
+
+    const method = req.method as UserPermissionVerb; // Ensure this matches your enum type
+    const params = req.params;
+    const validation =checkPermissions(permissions, url, method, params);
+    console.log(validation)
+
+    if (validation) {
+      return next();
+    } else {
+      return sendJSONResponse({ res , statusCode : 403 , message  : { error : 'Access to the requested URL is blocked or permission is denied. ' , code :-10007 } , description : 'The URL you are trying to access may be restricted based on your account permissions or geographical location. Ensure you have the correct permissions or contact support for help.'})
+      
+    }
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
