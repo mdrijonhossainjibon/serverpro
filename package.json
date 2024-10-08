@@ -6,8 +6,11 @@
     "dev": "npm-run-all --parallel watch-ts   live",
     "live": "nodemon",
     "watch-ts": "tsc -w",
-    "convert": "tsc",
-    "server": "ts-node ./dist/index.js"
+    "build": "tsc",
+    "server": "ts-node ./dist/index.js",
+    "start:pm2": "pm2 start ecosystem.config.js",
+    "logs": "pm2 logs",
+    "rm": "pm2 delete server"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +31,7 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.14",
+    "pm2": "^5.4.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "ua-parser-js": "^1.0.38",

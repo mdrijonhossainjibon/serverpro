@@ -29,8 +29,8 @@ export class SMTP_SERVICE {
       }
     });
      
-    this.templatePath = path.join(__dirname, 'emailTemplate.html');
-    this.htmlTemplate = fs.readFileSync(this.templatePath, 'utf8');
+    this.templatePath = ''//path.join(__dirname, 'emailTemplate.html');
+    this.htmlTemplate = '' //fs.readFileSync(this.templatePath, 'utf8');
      
   } 
 
